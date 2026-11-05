@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>家配咒語</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='none' stroke='%2320252d' stroke-width='2' stroke-linejoin='round' d='m5 10 11-6 11 6v13l-11 6-11-6Zm0 0 11 6 11-6M16 16v13'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="立體家配咒語首頁"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="m5 10 11-6 11 6v13l-11 6-11-6Zm0 0 11 6 11-6M16 16v13"/></svg><span>家配咒語</span><span class="brand-note">PROMPT STUDIO</span></a>
+    <nav aria-label="網站導覽"><a href="https://junworkgogo.github.io/deco-words/" target="_blank" rel="noopener noreferrer">裝飾字英譯 <span aria-hidden="true">↗</span></a><button class="text-button" id="help">如何使用 <span class="help-mark">?</span></button></nav>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="title">
+      <div class="eyebrow"><span class="green-dot"></span> 2D 平面 → 3D 家配圖</div>
+      <h1 id="title">好家配，從好咒語開始。</h1>
+      <p>保留格局與配置，客製你想要的立體表現。</p>
+    </section>
+    <div class="workspace">
+      <section class="settings" aria-labelledby="settings-title">
+        <div class="panel-heading"><h2 id="settings-title">客製你的咒語</h2></div>
+        <div class="tabs" role="tablist" aria-label="咒語設定分類">
+          <button role="tab" aria-selected="true" aria-controls="panel-basic" id="tab-basic" tabindex="0">基本設定</button>
+          <button role="tab" aria-selected="false" aria-controls="panel-visual" id="tab-visual" tabindex="-1">材質與畫面</button>
+          <button role="tab" aria-selected="false" aria-controls="panel-notes" id="tab-notes" tabindex="-1">補充資訊</button>
+        </div>
+        <form id="settings-form">
+          <div id="panel-basic" role="tabpanel" aria-labelledby="tab-basic">
+            <div class="locked-note"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="5" y="9" width="10" height="8" rx="2"/><path d="M7 9V6a3 3 0 0 1 6 0v3"/></svg><div><strong>格局與物件配置，始終保留</strong><p>外牆、隔間、開口、家具位置與數量不變。製圖符號不轉成裝飾。</p></div></div>
+            <fieldset><legend>一般建築門 <span>入口・房間・一般浴室門</span></legend><div class="choice-grid">
+              <label class="choice"><input type="radio" name="doors" value="remove" checked><span><strong>移除門片</strong><small>保留原有門洞與通道</small></span></label>
+              <label class="choice"><input type="radio" name="doors" value="keep"><span><strong>保留門片</strong><small>維持原有門型，完全關閉</small></span></label>
+            </div><p class="field-note">不影響櫃門、窗戶與乾濕分離玻璃門。</p></fieldset>
+            <fieldset><legend>衣櫃與掛衣區</legend><div class="choice-grid">
+              <label class="choice"><input type="radio" name="wardrobe" value="open" checked><span><strong>敞頂展示</strong><small>正面開放，整排掛衣可見</small></span></label>
+              <label class="choice"><input type="radio" name="wardrobe" value="closed"><span><strong>完整櫃體</strong><small>保留頂板，關閉櫃門</small></span></label>
+            </div>
+            <div id="clothing-options" class="subfields"><label for="density">掛衣密度</label><select id="density" name="density"><option value="full">飽滿連續（標準）</option><option value="moderate">適中留白</option></select><label for="clothes">衣物配色</label><select id="clothes" name="clothes"><option value="natural">自然配色，不額外指定</option><option value="neutral">米白、淺灰與大地色</option><option value="monochrome">黑白灰</option></select></div>
+            <p id="wardrobe-note" class="field-note">僅適用於已確認為衣櫃且有掛衣符號的區域。</p></fieldset>
+            <div class="compact-row"><div><label for="glass">乾濕分離玻璃門</label><p>保留門型、位置與原有分片</p></div><select id="glass" name="glass"><option value="closed">完全關閉（標準）</option><option value="original">保留原圖狀態</option></select></div>
+            <div class="fixed-row"><span>其他收納櫃</span><span>封頂・關閉門片 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 10 3 3 7-7"/></svg></span></div>
+            <div class="fixed-row"><span>窗戶</span><span>形式與開啟狀態不變 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 10 3 3 7-7"/></svg></span></div>
+          </div>
+          <div id="panel-visual" role="tabpanel" aria-labelledby="tab-visual" hidden>
+            <p class="tab-description">只調整視覺表現，不移動家具或改變原圖格局。</p>
+            <div class="form-field"><label for="style">室內風格</label><select id="style" name="style"><option value="original">依原圖，不額外指定（標準）</option><option value="modern">現代簡約</option><option value="warm">暖木自然</option><option value="hotel">高端飯店</option><option value="japandi">日式侘寂</option></select></div>
+            <div class="form-field"><label for="wall">牆體色調</label><select id="wall" name="wall"><option value="original">不額外指定（標準）</option><option value="dark">深色</option><option value="light">淺色</option></select></div>
+            <div class="form-field"><label for="wood">木質櫃體色調</label><select id="wood" name="wood"><option value="original">自然木質，不額外指定（標準）</option><option value="light">淺色橡木</option><option value="medium">溫潤中木色</option><option value="dark">深色胡桃木</option></select></div>
+            <div class="form-field"><label for="floor">地板材質</label><select id="floor" name="floor"><option value="original">依原圖材質分區（標準）</option><option value="wood">公共區與臥室淺木地板</option><option value="stone">公共區淺色石材、臥室木地板</option></select></div>
+            <div class="form-field"><label for="angle">俯視角度</label><select id="angle" name="angle"><option value="original">可完整看見室內（標準）</option><option value="top">垂直正上方俯視</option><option value="iso">斜上方立體俯視</option></select></div>
+            <div class="form-field"><label for="background">畫面背景</label><select id="background" name="background"><option value="original">不額外指定（標準）</option><option value="white">純白</option><option value="gray">淺灰</option><option value="cream">暖米白</option></select></div>
+            <div class="form-field"><label for="light">光線與陰影</label><select id="light" name="light"><option value="original">不額外指定（標準）</option><option value="soft">柔和自然光、細緻陰影</option><option value="studio">均勻棚拍光、清晰物件邊界</option></select></div>
+            <p class="field-note">浴室與廚房原有材質分界仍保留。風格設定不增加擺飾、植栽或家具。</p>
+          </div>
+          <div id="panel-notes" role="tabpanel" aria-labelledby="tab-notes" hidden>
+            <div class="form-field"><label for="project">專案名稱 <span>選填</span></label><input id="project" name="project" maxlength="80" placeholder="例：晴川 A3 戶"></div>
+            <div class="form-field"><label for="confirmed">已確認的區域 <span>選填</span></label><textarea id="confirmed" name="confirmed" rows="6" maxlength="3000" placeholder="例：入口右側的 X 區域是鞋櫃；主臥床尾是衣櫃，內有掛衣桿。"></textarea><p class="field-note">請寫具體位置與物件類型，生圖時就不必重複確認。</p></div>
+            <div class="form-field"><label for="extra">補充偏好 <span>選填</span></label><textarea id="extra" name="extra" rows="5" maxlength="2000" placeholder="例：牆面採暖白，沙發沿用原圖色調。"></textarea><p class="field-note">補充文字會原文加入咒語。若與設定衝突，優先保留格局與物件配置，並先詢問確認。</p></div>
+            <div class="privacy-note">設定只儲存在目前的瀏覽器，不會上傳。這裡產生咒語，不會辨識圖面或直接生圖。</div>
+          </div>
+        </form>
+        <div class="settings-actions"><button id="save" class="secondary">儲存我的設定</button><button id="reset" class="text-button">恢復標準版 <span aria-hidden="true">↺</span></button></div>
+        <p class="save-note" id="save-note">儲存後，下次開啟將沿用這台裝置的設定。</p>
+      </section>
+      <section class="preview" aria-labelledby="preview-title">
+        <div class="preview-header"><div><div class="eyebrow">YOUR PROMPT</div><h2 id="preview-title">專屬家配咒語</h2></div><span class="live"><span class="green-dot"></span> 即時更新</span></div>
+        <div class="preview-tags" aria-label="目前設定摘要"><span id="tag-door">移除門片</span><span id="tag-wardrobe">衣櫃敞頂</span><span id="tag-glass">玻璃門關閉</span></div>
+        <label class="sr-only" for="prompt">完整咒語預覽</label><textarea readonly id="prompt" spellcheck="false"></textarea>
+        <div class="preview-bottom"><div class="prompt-meta"><span>標準規則 v1.0</span><span id="char-count"></span></div><div class="output-actions"><button class="primary" id="copy"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="6" width="9" height="11" rx="2"/><path d="M12 6V3H4v11h3"/></svg><span>複製完整咒語</span></button></div></div>
+        <p class="usage-note">複製後，將咒語與 2D 平面圖一起交給生圖工具。</p>
+      </section>
+    </div>
+    <footer><span>讓每一張家配圖，都從精準的指令出發。</span><span>2D → 3D · 家配咒語</span></footer>
+  </main>
+  <div class="toast" role="status" aria-live="polite" id="toast"></div>
+  <dialog id="help-dialog"><button class="close-dialog" aria-label="關閉使用說明">×</button><div class="eyebrow">QUICK GUIDE</div><h2>三步，準備好你的咒語。</h2><ol class="guide"><li><strong>調整需求</strong><p>標準版已套用原有規則；你只需調整想改的選項。</p></li><li><strong>補充已確認資訊</strong><p>寫明圖面中已知的衣櫃、鞋櫃或其他區域，減少重複詢問。</p></li><li><strong>複製，與平面圖一起使用</strong><p>將完整咒語與原圖交給生圖工具。工具若發現不明區域，應先請你確認。</p></li></ol><button class="primary close-help">開始設定</button></dialog>
+  <dialog id="reset-dialog"><h2>恢復標準版？</h2><p>目前選項與補充文字將回到初始值。已儲存的設定仍會保留，重新開啟網站時會載入。</p><div class="dialog-actions"><button id="cancel-reset" class="secondary">保留目前設定</button><button id="confirm-reset" class="primary">恢復標準版</button></div></dialog>
+<script defer src="./app.js"></script>
+</body>
+</html>
