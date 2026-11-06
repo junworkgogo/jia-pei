@@ -30,12 +30,12 @@
           <div id="panel-basic" role="tabpanel" aria-labelledby="tab-basic">
             <div class="locked-note"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="5" y="9" width="10" height="8" rx="2"/><path d="M7 9V6a3 3 0 0 1 6 0v3"/></svg><div><strong>格局與物件配置，始終保留</strong><p>外牆、隔間、開口、家具位置與數量不變。製圖符號不轉成裝飾。</p></div></div>
             <fieldset><legend>一般建築門 <span>入口・房間・一般浴室門</span></legend><div class="choice-grid">
-              <label class="choice"><input type="radio" name="doors" value="remove" checked><span><strong>移除門片</strong><small>保留原有門洞與通道</small></span></label>
-              <label class="choice"><input type="radio" name="doors" value="keep"><span><strong>保留門片</strong><small>維持原有門型，完全關閉</small></span></label>
+              <label class="choice"><img class="choice-img" src="./img/door-remove.jpg" alt="" width="384" height="314"><input type="radio" name="doors" value="remove" checked><span><strong>移除門片</strong><small>保留原有門洞與通道</small></span></label>
+              <label class="choice"><img class="choice-img" src="./img/door-keep.jpg" alt="" width="600" height="491"><input type="radio" name="doors" value="keep"><span><strong>保留門片</strong><small>維持原有門型，完全關閉</small></span></label>
             </div><p class="field-note">不影響櫃門、窗戶與乾濕分離玻璃門。</p></fieldset>
             <fieldset><legend>衣櫃與掛衣區</legend><div class="choice-grid">
-              <label class="choice"><input type="radio" name="wardrobe" value="open" checked><span><strong>敞頂展示</strong><small>正面開放，整排掛衣可見</small></span></label>
-              <label class="choice"><input type="radio" name="wardrobe" value="closed"><span><strong>完整櫃體</strong><small>保留頂板，關閉櫃門</small></span></label>
+              <label class="choice"><img class="choice-img" src="./img/wardrobe-open.jpg" alt="" width="600" height="626"><input type="radio" name="wardrobe" value="open" checked><span><strong>敞頂展示</strong><small>正面開放，整排掛衣可見</small></span></label>
+              <label class="choice"><img class="choice-img" src="./img/wardrobe-closed.jpg" alt="" width="566" height="590"><input type="radio" name="wardrobe" value="closed"><span><strong>完整櫃體</strong><small>保留頂板，關閉櫃門</small></span></label>
             </div>
             <div id="clothing-options" class="subfields"><label for="density">掛衣密度</label><select id="density" name="density"><option value="full">飽滿連續（標準）</option><option value="moderate">適中留白</option></select><label for="clothes">衣物配色</label><select id="clothes" name="clothes"><option value="natural">自然配色，不額外指定</option><option value="neutral">米白、淺灰與大地色</option><option value="monochrome">黑白灰</option></select></div>
             <p id="wardrobe-note" class="field-note">僅適用於已確認為衣櫃且有掛衣符號的區域。</p></fieldset>
