@@ -2,3 +2,5 @@
 body{background:var(--bg);color:var(--ink);font:inherit}
 /* 2026-11-06 按鈕圖片：圖在文字上方 */
 .choice{flex-wrap:wrap}.choice-img{display:block;flex:0 0 100%;width:100%;height:auto;border-radius:6px;margin-bottom:3px}.choice>span{flex:1 1 0;min-width:0}
+/* 2026-11-06 乾濕分離玻璃門改圖卡、掛衣密度與衣物配色改圓點 */
+.glass-field{padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:0}.subfields{align-items:start;row-gap:14px}.sub-label{font-size:12px;color:#68707a;line-height:1.6}.radio-row{display:flex;flex-wrap:wrap;gap:8px 18px}.subfields .radio-row label{display:inline-flex;align-items:center;gap:6px;font-size:12px;line-height:1.6;color:#343b44;cursor:pointer}.radio-row input{accent-color:#688b24;width:14px;height:14px;margin:0;flex-shrink:0}
