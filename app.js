@@ -76,6 +76,11 @@ if(typeof document!=='undefined'){
     $('tag-door').textContent=state.doors==='remove'?'移除門片':'門片關閉';
     $('tag-wardrobe').textContent=open?'衣櫃敞頂':'完整衣櫃';
     $('tag-glass').textContent=state.glass==='closed'?'玻璃門關閉':'玻璃門原狀';
+    $('summary-door').textContent=state.doors==='remove'?'移除門片，保留門洞':'保留門片，完全關閉';
+    $('summary-wardrobe').textContent=open?'敞頂展示，正面開放':'完整櫃體，關閉櫃門';
+    $('summary-clothing-row').hidden=!open;
+    $('summary-clothing').textContent=(state.density==='full'?'飽滿連續':'適中留白')+' · '+({natural:'自然配色',neutral:'米白與大地色',monochrome:'黑白灰'}[state.clothes]);
+    $('summary-glass').textContent=state.glass==='closed'?'完全關閉':'保留原圖狀態';
   }
   form.addEventListener('input',render);form.addEventListener('change',render);form.addEventListener('submit',e=>e.preventDefault());
   function selectTab(tab,focus=false){document.querySelectorAll('[role="tab"]').forEach(t=>{const active=t===tab;t.setAttribute('aria-selected',String(active));t.tabIndex=active?0:-1;$(t.getAttribute('aria-controls')).hidden=!active;});if(focus)tab.focus();}
@@ -85,7 +90,22 @@ if(typeof document!=='undefined'){
   $('reset').addEventListener('click',()=>$('reset-dialog').showModal());
   $('cancel-reset').addEventListener('click',()=>$('reset-dialog').close());
   $('confirm-reset').addEventListener('click',()=>{applyToForm(DEFAULTS);render();$('prompt').scrollTop=0;$('reset-dialog').close();$('save-note').textContent='已恢復標準版。如要下次沿用，請按「儲存我的設定」。';notify('已恢復標準版');});
-  $('copy').addEventListener('click',async()=>{try{if(!navigator.clipboard?.writeText)throw Error('Clipboard unavailable');await navigator.clipboard.writeText($('prompt').value);notify('已複製完整咒語，可搭配平面圖使用');}catch{$('prompt').focus();$('prompt').select();notify('無法自動複製，已選取全文。請按 ⌘C 或 Ctrl+C 複製。');}});
+  let copying=false;
+  async function copyPrompt(){
+    if(copying)return;copying=true;
+    const buttons=[$('copy'),$('copy-mobile')];buttons.forEach(b=>b.disabled=true);
+    try{
+      if(!navigator.clipboard?.writeText)throw Error('Clipboard unavailable');
+      await navigator.clipboard.writeText($('prompt').value);
+      notify('已複製完整咒語，可搭配平面圖使用');
+    }catch{
+      $('prompt-details').open=true;$('prompt').focus();$('prompt').select();
+      notify('無法自動複製，已選取全文。請長按複製，或按 ⌘C / Ctrl+C。');
+    }finally{copying=false;buttons.forEach(b=>b.disabled=false);}
+  }
+  $('copy').addEventListener('click',copyPrompt);
+  $('copy-mobile').addEventListener('click',copyPrompt);
+  $('view-preview').addEventListener('click',()=>{$('preview').focus({preventScroll:true});$('preview').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});});
   $('help').addEventListener('click',()=>$('help-dialog').showModal());
   document.querySelectorAll('.close-dialog,.close-help').forEach(b=>b.addEventListener('click',()=>$('help-dialog').close()));
   document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{const r=d.getBoundingClientRect();if(e.target===d&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))d.close();}));
