@@ -6,7 +6,7 @@
 <title>JAI配咒語</title>
 <meta name="description" content="選擇門片、衣櫃與玻璃門的呈現方式，即時組合專屬家配提示詞，複製後搭配 2D 平面圖交給 AI 生圖工具使用。">
 <link rel="icon" type="image/svg+xml" sizes="any" href="./favicon-smile-20261112.svg?v=2">
-<link rel="stylesheet" href="./style.css?v=20261116-prompt-modal">
+<link rel="stylesheet" href="./style.css?v=20261116-locked-rules">
 </head>
 <body>
   <header class="site-header">
@@ -19,7 +19,7 @@
         <div class="panel-heading"><h1 id="settings-title">客製你的咒語</h1></div>
         <form id="settings-form">
           <div id="panel-basic">
-            <details class="rules-details"><summary>預設納入格局與配置保留規則<span aria-hidden="true">查看內容</span></summary><div class="locked-note"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="5" y="9" width="10" height="8" rx="2"/><path d="M7 9V6a3 3 0 0 1 6 0v3"/></svg><div><strong>格局與物件配置保留規則</strong><p>外牆、隔間、開口、家具位置與數量不變。製圖符號不轉成裝飾。實際生成結果仍需核對。</p></div></div></details>
+            <details class="rules-details"><summary><svg class="rules-lock" viewBox="0 0 20 20" aria-hidden="true"><rect x="5" y="9" width="10" height="8" rx="2"/><path d="M7 9V6a3 3 0 0 1 6 0v3"/></svg>固定保留規則<span aria-hidden="true">查看項目</span></summary><div class="fixed-rules"><p class="fixed-rules-caption">已鎖定・自動納入每次咒語</p><ul><li><strong>建築格局</strong><span>外牆、隔間與門窗開口不變</span></li><li><strong>家具配置</strong><span>位置、尺寸、數量與朝向不變</span></li><li><strong>其他收納櫃</strong><span>保留頂板、關閉門片</span></li><li><strong>窗戶</strong><span>形式、位置、尺寸與開啟狀態不變</span></li><li><strong>室外冷氣機</strong><span>依原圖 AC 標示位置保留</span></li><li><strong>製圖符號</strong><span>移除文字、尺寸線、X 記號與開門圓弧</span></li></ul><p class="fixed-rules-note">生成後仍需核對格局與物件。</p></div></details>
             <fieldset><legend>一般建築門 <span>入口・房間・一般浴室門</span></legend><div class="choice-grid">
               <label class="choice door-choice"><span class="choice-visual"><img class="choice-img" src="./img/door-remove.jpg" alt="門洞保留、門片移除的局部示意" width="384" height="314"><span class="image-label">門洞保留</span></span><input type="radio" name="doors" value="remove" checked><span><strong>移除門片</strong><small>保留原有門洞與通道</small></span></label>
               <label class="choice door-choice"><span class="choice-visual"><img class="choice-img" src="./img/door-keep.jpg" alt="門片關閉的局部示意" width="600" height="491"><span class="image-label">門片關閉</span></span><input type="radio" name="doors" value="keep"><span><strong>保留門片</strong><small>維持原有門型，完全關閉</small></span></label>
@@ -34,8 +34,6 @@
               <label class="choice"><span class="choice-visual"><img class="choice-img" src="./img/glass-closed.jpg" alt="玻璃門關閉示意" width="600" height="450"><span class="image-label">玻璃門關閉</span></span><input type="radio" name="glass" value="closed" checked><span><strong>完全關閉</strong><small>標準，不保留原圖開門角度</small></span></label>
               <label class="choice"><span class="choice-visual"><img class="choice-img" src="./img/glass-original.jpg" alt="沿用原圖狀態示意" width="600" height="450"><span class="image-label">沿用原圖狀態</span></span><input type="radio" name="glass" value="original"><span><strong>保留原圖狀態</strong><small>維持原圖開啟狀態與角度</small></span></label>
             </div></fieldset>
-            <div class="fixed-row"><span>其他收納櫃</span><span>封頂・關閉門片 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 10 3 3 7-7"/></svg></span></div>
-            <div class="fixed-row"><span>窗戶</span><span>形式與開啟狀態不變 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 10 3 3 7-7"/></svg></span></div>
           </div>
         </form>
         <div class="settings-actions"><button id="save" class="secondary">儲存我的設定</button><button id="reset" class="text-button">恢復標準版 <span aria-hidden="true">↺</span></button></div>

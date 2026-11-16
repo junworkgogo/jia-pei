@@ -78,3 +78,14 @@ legend{flex-wrap:wrap;gap:4px 8px}.subfields{grid-template-columns:62px minmax(0
 .prompt-dialog-note{flex-shrink:0;margin:16px 0 0;padding-top:12px;border-top:1px solid var(--line);font-size:10px}
 html:has(dialog[open]){overflow:hidden}
 @media(max-width:700px){#prompt-dialog{width:calc(100vw - 28px);max-height:calc(100dvh - 28px);padding:22px 20px 16px}#prompt-dialog #prompt{height:65dvh;font-size:12px}.prompt-trigger{padding:16px 0}}
+
+/* Fixed rules are grouped above the editable options. */
+.rules-details summary:before{content:none}
+.rules-lock{width:17px;height:17px;flex:0 0 17px;fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linejoin:round}
+.fixed-rules{padding:0 15px 15px;border-top:1px solid var(--line)}
+.fixed-rules-caption{font-size:10px;color:var(--accent);margin:12px 0}
+.fixed-rules ul{list-style:none;padding:0;margin:0}
+.fixed-rules li{padding:10px 0;border-bottom:1px solid var(--line);font-size:11px;line-height:1.8}
+.fixed-rules li strong{display:block;font-weight:550;color:var(--ink)}
+.fixed-rules li span{display:block;color:var(--muted)}
+.fixed-rules-note{font-size:10px;line-height:1.8;color:var(--muted);margin:12px 0 0}
