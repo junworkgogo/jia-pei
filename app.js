@@ -13,6 +13,7 @@ function buildPrompt(raw) {
   const s=normalizeSettings(raw);
   const parts=[
     '請將這張 2D 家配圖轉成立體家配圖。先辨識建築、家具與設備的實際形體，再將製圖符號轉換成實體物件，不要把平面圖上的所有線條直接畫成立體表面的圖案。',
+    '【輸入範圍】\n本次只處理所附原圖中的單一樓層。若圖中同時出現多個樓層、不同戶型或多張平面圖，先停止並請我提供要處理的單層圖，不要自行合併、挑選或混用格局。',
     '【格局與配置】\n保留原圖的外牆輪廓、隔間、門窗開口，以及家具的位置、尺寸、數量與朝向。不得為了美化構圖而移動、旋轉、增減物件，或改變門洞與通道寬度。'
   ];
   if(s.project.trim()) parts.splice(1,0,'【專案名稱】\n'+s.project.trim());
@@ -107,6 +108,7 @@ if(typeof document!=='undefined'){
   $('copy-mobile').addEventListener('click',copyPrompt);
   $('view-preview').addEventListener('click',()=>{$('preview').focus({preventScroll:true});$('preview').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});});
   $('help').addEventListener('click',()=>$('help-dialog').showModal());
+  $('show-demo').addEventListener('click',()=>{$('help-dialog').showModal();$('demo-title').scrollIntoView({block:'nearest'});});
   document.querySelectorAll('.close-dialog,.close-help').forEach(b=>b.addEventListener('click',()=>$('help-dialog').close()));
   document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{const r=d.getBoundingClientRect();if(e.target===d&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))d.close();}));
   try{const stored=JSON.parse(localStorage.getItem(storageKey)||'null');if(stored?.version===1&&stored.settings&&typeof stored.settings==='object'&&!Array.isArray(stored.settings)){state=normalizeSettings(stored.settings);$('save-note').textContent='已載入此瀏覽器先前儲存的設定。';}}catch{$('save-note').textContent='未載入儲存設定，目前使用標準版。';}
