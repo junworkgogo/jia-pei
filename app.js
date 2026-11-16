@@ -71,7 +71,6 @@ if(typeof document!=='undefined'){
     const open=state.wardrobe==='open';
     $('clothing-options').hidden=!open;
     // Keep remembered clothing choices in form data; the builder ignores them for closed cabinets.
-    $('wardrobe-note').textContent=open?'僅適用於已確認為衣櫃且有掛衣符號的區域。':'完整櫃體模式不顯示內部衣物，掛衣密度與配色暫不套用。';
     $('prompt').value=buildPrompt(state);
     $('char-count').textContent=Array.from($('prompt').value).length.toLocaleString('zh-TW')+' 字';
     $('tag-door').textContent=state.doors==='remove'?'移除門片':'門片關閉';

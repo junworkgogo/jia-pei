@@ -20,16 +20,16 @@
         <form id="settings-form">
           <div id="panel-basic">
             <details class="rules-details"><summary><svg class="rules-lock" viewBox="0 0 20 20" aria-hidden="true"><rect x="5" y="9" width="10" height="8" rx="2"/><path d="M7 9V6a3 3 0 0 1 6 0v3"/></svg>固定保留規則<span aria-hidden="true">查看項目</span></summary><div class="fixed-rules"><p class="fixed-rules-caption">已鎖定・自動納入每次咒語</p><ul><li><strong>建築格局</strong><span>外牆、隔間與門窗開口不變</span></li><li><strong>家具配置</strong><span>位置、尺寸、數量與朝向不變</span></li><li><strong>其他收納櫃</strong><span>保留頂板、關閉門片</span></li><li><strong>窗戶</strong><span>形式、位置、尺寸與開啟狀態不變</span></li><li><strong>室外冷氣機</strong><span>依原圖 AC 標示位置保留</span></li><li><strong>製圖符號</strong><span>移除文字、尺寸線、X 記號與開門圓弧</span></li></ul><p class="fixed-rules-note">生成後仍需核對格局與物件。</p></div></details>
-            <fieldset><legend>一般建築門 <span>入口・房間・一般浴室門</span></legend><div class="choice-grid">
+            <fieldset><legend>房門</legend><div class="choice-grid">
               <label class="choice door-choice"><span class="choice-visual"><img class="choice-img" src="./img/door-remove.jpg" alt="門洞保留、門片移除的局部示意" width="384" height="314"><span class="image-label">門洞保留</span></span><input type="radio" name="doors" value="remove" checked><span><strong>移除門片</strong><small>保留原有門洞與通道</small></span></label>
               <label class="choice door-choice"><span class="choice-visual"><img class="choice-img" src="./img/door-keep.jpg" alt="門片關閉的局部示意" width="600" height="491"><span class="image-label">門片關閉</span></span><input type="radio" name="doors" value="keep"><span><strong>保留門片</strong><small>維持原有門型，完全關閉</small></span></label>
-            </div><p class="field-note">不影響櫃門、窗戶與乾濕分離玻璃門。</p></fieldset>
+            </div></fieldset>
             <fieldset><legend>衣櫃與掛衣區</legend><div class="choice-grid">
               <label class="choice"><span class="choice-visual"><img class="choice-img" src="./img/wardrobe-open.jpg" alt="敞開・可見內部示意" width="600" height="626"><span class="image-label">敞開・可見內部</span></span><input type="radio" name="wardrobe" value="open" checked><span><strong>敞頂展示</strong><small>正面開放，依設定呈現掛衣</small></span></label>
               <label class="choice"><span class="choice-visual"><img class="choice-img" src="./img/wardrobe-closed.jpg" alt="封頂・關閉櫃門示意" width="566" height="590"><span class="image-label">封頂・關閉櫃門</span></span><input type="radio" name="wardrobe" value="closed"><span><strong>完整櫃體</strong><small>保留頂板，關閉櫃門</small></span></label>
             </div>
             <div id="clothing-options" class="subfields"><span class="sub-label" id="density-label">掛衣密度</span><div class="radio-row" role="radiogroup" aria-labelledby="density-label"><label><input type="radio" name="density" value="full" checked>飽滿連續（標準）</label><label><input type="radio" name="density" value="moderate">適中留白</label></div><span class="sub-label" id="clothes-label">衣物配色</span><div class="radio-row" role="radiogroup" aria-labelledby="clothes-label"><label><input type="radio" name="clothes" value="natural" checked>自然配色，不額外指定</label><label><input type="radio" name="clothes" value="neutral">米白、淺灰與大地色</label><label><input type="radio" name="clothes" value="monochrome">黑白灰</label></div></div>
-            <p id="wardrobe-note" class="field-note">僅適用於已確認為衣櫃且有掛衣符號的區域。</p><p class="illustration-note">圖卡示意開放方式；實際掛衣密度與配色依下方設定。</p></fieldset>
+            </fieldset>
             <fieldset class="glass-field"><legend>乾濕分離玻璃門 <span>保留門型、位置與原有分片</span></legend><div class="choice-grid">
               <label class="choice"><span class="choice-visual"><img class="choice-img" src="./img/glass-closed.jpg" alt="玻璃門關閉示意" width="600" height="450"><span class="image-label">玻璃門關閉</span></span><input type="radio" name="glass" value="closed" checked><span><strong>完全關閉</strong><small>標準，不保留原圖開門角度</small></span></label>
               <label class="choice"><span class="choice-visual"><img class="choice-img" src="./img/glass-original.jpg" alt="沿用原圖狀態示意" width="600" height="450"><span class="image-label">沿用原圖狀態</span></span><input type="radio" name="glass" value="original"><span><strong>保留原圖狀態</strong><small>維持原圖開啟狀態與角度</small></span></label>
@@ -42,7 +42,7 @@
       <section class="preview" id="preview" aria-labelledby="preview-title" tabindex="-1">
         <div class="preview-header"><div><div class="eyebrow">YOUR PROMPT</div><h2 id="preview-title">專屬家配咒語</h2></div><span class="live"><span class="accent-dot"></span> 即時更新</span></div>
         <div class="preview-tags" aria-label="目前設定摘要"><span id="tag-door">移除門片</span><span id="tag-wardrobe">衣櫃敞頂</span><span id="tag-glass">玻璃門關閉</span></div>
-        <dl class="selection-summary"><div><dt>一般建築門</dt><dd id="summary-door"></dd></div><div><dt>衣櫃表現</dt><dd id="summary-wardrobe"></dd></div><div id="summary-clothing-row"><dt>衣物細節</dt><dd id="summary-clothing"></dd></div><div><dt>乾濕分離玻璃門</dt><dd id="summary-glass"></dd></div></dl>
+        <dl class="selection-summary"><div><dt>房門</dt><dd id="summary-door"></dd></div><div><dt>衣櫃表現</dt><dd id="summary-wardrobe"></dd></div><div id="summary-clothing-row"><dt>衣物細節</dt><dd id="summary-clothing"></dd></div><div><dt>乾濕分離玻璃門</dt><dd id="summary-glass"></dd></div></dl>
         <div class="included-rule"><span aria-hidden="true">✓</span> 已包含格局、門窗與物件配置保留規則</div>
         <div class="prompt-details"><button type="button" id="view-prompt" class="prompt-trigger" aria-haspopup="dialog" aria-controls="prompt-dialog">查看完整咒語<span aria-hidden="true">開啟視窗 ↗</span></button></div>
         <div class="preview-bottom"><div class="prompt-meta"><span>標準規則 v1.0 · 全文複製</span><span id="char-count"></span></div><div class="output-actions"><button class="primary" id="copy"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="6" width="9" height="11" rx="2"/><path d="M12 6V3H4v11h3"/></svg><span>複製完整咒語</span></button></div></div>
@@ -77,7 +77,7 @@
     <button class="primary close-help">開始設定</button>
   </dialog>
   <dialog id="reset-dialog" aria-labelledby="reset-title"><h2 id="reset-title">恢復標準版？</h2><p>目前選項將回到初始值。已儲存的設定仍會保留，重新開啟網站時會載入。</p><div class="dialog-actions"><button id="cancel-reset" class="secondary">保留目前設定</button><button id="confirm-reset" class="primary">恢復標準版</button></div></dialog>
-<script defer src="./app.js?v=20261116-prompt-modal"></script>
+<script defer src="./app.js?v=20261116-simplify-copy"></script>
 </body>
 </html>
 
