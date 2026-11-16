@@ -89,3 +89,8 @@ html:has(dialog[open]){overflow:hidden}
 .fixed-rules li strong{display:block;font-weight:550;color:var(--ink)}
 .fixed-rules li span{display:block;color:var(--muted)}
 .fixed-rules-note{font-size:10px;line-height:1.8;color:var(--muted);margin:12px 0 0}
+
+/* Align the closed-door crop with the original-state reference. */
+.glass-field .choice-visual{aspect-ratio:1.2}
+.glass-field .choice:first-child .choice-img{transform:scaleY(1.36);transform-origin:center 8%}
+@media(min-width:701px){main{padding-bottom:24px}}
