@@ -64,3 +64,17 @@ legend{flex-wrap:wrap;gap:4px 8px}.subfields{grid-template-columns:62px minmax(0
  .preview:has(.prompt-details[open]) .selection-summary{display:none}
  .prompt-details[open]{min-height:110px}
 }
+
+
+/* Full prompt opens in a modal, independent of the workspace height. */
+.prompt-trigger{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;padding:14px 0;border:0;background:transparent;color:var(--accent);text-align:left;font-size:12px;font-weight:550}
+.prompt-trigger span{font-size:10px;font-weight:400;color:var(--muted)}
+#prompt-dialog{width:calc(100vw - 40px);max-width:800px;max-height:calc(100dvh - 40px);padding:26px 28px 18px;overflow:hidden}
+#prompt-dialog[open]{display:flex;flex-direction:column}
+.prompt-dialog-header{position:relative;flex-shrink:0;padding-right:36px}
+#prompt-dialog h2{margin:0 0 18px;font-size:19px}
+#prompt-dialog .close-dialog{right:-8px;top:-10px;width:40px;height:40px}
+#prompt-dialog #prompt{flex:1 1 auto;width:100%;height:60dvh;min-height:0;margin:0;padding:4px 12px 4px 0;resize:none;overflow-y:auto;font-size:13px;line-height:2;overscroll-behavior:contain}
+.prompt-dialog-note{flex-shrink:0;margin:16px 0 0;padding-top:12px;border-top:1px solid var(--line);font-size:10px}
+html:has(dialog[open]){overflow:hidden}
+@media(max-width:700px){#prompt-dialog{width:calc(100vw - 28px);max-height:calc(100dvh - 28px);padding:22px 20px 16px}#prompt-dialog #prompt{height:65dvh;font-size:12px}.prompt-trigger{padding:16px 0}}

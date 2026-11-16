@@ -91,6 +91,8 @@ if(typeof document!=='undefined'){
   $('reset').addEventListener('click',()=>$('reset-dialog').showModal());
   $('cancel-reset').addEventListener('click',()=>$('reset-dialog').close());
   $('confirm-reset').addEventListener('click',()=>{applyToForm(DEFAULTS);render();$('prompt').scrollTop=0;$('reset-dialog').close();$('save-note').textContent='已恢復標準版。如要下次沿用，請按「儲存我的設定」。';notify('已恢復標準版');});
+  $('view-prompt').addEventListener('click',()=>{$('prompt-dialog-note').textContent='點擊視窗外的空白處，或按 Esc 即可關閉。';$('prompt').scrollTop=0;$('prompt-dialog').showModal();});
+  $('close-prompt').addEventListener('click',()=>$('prompt-dialog').close());
   let copying=false;
   async function copyPrompt(){
     if(copying)return;copying=true;
@@ -100,8 +102,8 @@ if(typeof document!=='undefined'){
       await navigator.clipboard.writeText($('prompt').value);
       notify('已複製完整咒語，可搭配平面圖使用');
     }catch{
-      $('prompt-details').open=true;$('prompt').focus();$('prompt').select();
-      notify('無法自動複製，已選取全文。請長按複製，或按 ⌘C / Ctrl+C。');
+      if(!$('prompt-dialog').open)$('prompt-dialog').showModal();$('prompt').focus();$('prompt').select();
+      $('prompt-dialog-note').textContent='無法自動複製，已選取全文。請長按複製，或按 ⌘C / Ctrl+C。';
     }finally{copying=false;buttons.forEach(b=>b.disabled=false);}
   }
   $('copy').addEventListener('click',copyPrompt);
@@ -109,8 +111,9 @@ if(typeof document!=='undefined'){
   $('view-preview').addEventListener('click',()=>{$('preview').focus({preventScroll:true});$('preview').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});});
   $('help').addEventListener('click',()=>$('help-dialog').showModal());
   $('show-demo').addEventListener('click',()=>{$('help-dialog').showModal();$('demo-title').scrollIntoView({block:'nearest'});});
-  document.querySelectorAll('.close-dialog,.close-help').forEach(b=>b.addEventListener('click',()=>$('help-dialog').close()));
+  document.querySelectorAll('#help-dialog .close-dialog,#help-dialog .close-help').forEach(b=>b.addEventListener('click',()=>$('help-dialog').close()));
   document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{const r=d.getBoundingClientRect();if(e.target===d&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))d.close();}));
   try{const stored=JSON.parse(localStorage.getItem(storageKey)||'null');if(stored?.version===1&&stored.settings&&typeof stored.settings==='object'&&!Array.isArray(stored.settings)){state=normalizeSettings(stored.settings);$('save-note').textContent='已載入此瀏覽器先前儲存的設定。';}}catch{$('save-note').textContent='未載入儲存設定，目前使用標準版。';}
   applyToForm(state);render();
 }
+
