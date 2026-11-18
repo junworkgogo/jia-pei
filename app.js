@@ -108,7 +108,7 @@ if(typeof document!=='undefined'){
   $('reset').addEventListener('click',()=>$('reset-dialog').showModal());
   $('cancel-reset').addEventListener('click',()=>$('reset-dialog').close());
   $('confirm-reset').addEventListener('click',()=>{applyToForm(DEFAULTS);render();$('prompt').scrollTop=0;$('reset-dialog').close();$('save-note').textContent='已恢復標準版。如要下次沿用，請按「儲存我的設定」。';notify('已恢復標準版');});
-  $('view-prompt').addEventListener('click',()=>{$('prompt-dialog-note').textContent='點擊視窗外的空白處，或按 Esc 即可關閉。';$('prompt').scrollTop=0;$('prompt-dialog').showModal();});
+  $('view-prompt').addEventListener('click',()=>{$('prompt-dialog-note').textContent='';$('prompt').scrollTop=0;$('prompt-dialog').showModal();});
   $('close-prompt').addEventListener('click',()=>$('prompt-dialog').close());
   let copying=false;
   async function copyPrompt(){

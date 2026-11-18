@@ -6,7 +6,7 @@
 <title>JAI配咒語</title>
 <meta name="description" content="選擇門片、衣櫃與玻璃門的呈現方式，即時組合專屬家配提示詞，複製後搭配 2D 平面圖交給 AI 生圖工具使用。">
 <link rel="icon" type="image/svg+xml" sizes="any" href="./favicon-smile-20261112.svg?v=2">
-<link rel="stylesheet" href="./style.css?v=20261118-views-tools">
+<link rel="stylesheet" href="./style.css?v=20261118-no-note">
 <link rel="stylesheet" href="./option-motion.css?v=20261116-1"></head>
 <body>
   <header class="site-header">
@@ -70,7 +70,7 @@
   <dialog id="prompt-dialog" aria-labelledby="prompt-dialog-title">
     <div class="prompt-dialog-header"><h2 id="prompt-dialog-title">完整咒語</h2><button type="button" id="close-prompt" class="close-dialog" aria-label="關閉完整咒語">×</button></div>
     <label class="sr-only" for="prompt">完整咒語預覽</label><textarea readonly id="prompt" spellcheck="false"></textarea>
-    <p class="prompt-dialog-note" id="prompt-dialog-note" aria-live="polite">點擊視窗外的空白處，或按 Esc 即可關閉。</p>
+    <p class="prompt-dialog-note" id="prompt-dialog-note" aria-live="polite"></p>
   </dialog>
   <dialog id="help-dialog" aria-labelledby="help-title">
     <button class="close-dialog" aria-label="關閉使用說明">×</button>
@@ -91,7 +91,7 @@
     <button class="primary close-help">開始設定</button>
   </dialog>
   <dialog id="reset-dialog" aria-labelledby="reset-title"><h2 id="reset-title">恢復標準版？</h2><p>目前選項將回到初始值。已儲存的設定仍會保留，重新開啟網站時會載入。</p><div class="dialog-actions"><button id="cancel-reset" class="secondary">保留目前設定</button><button id="confirm-reset" class="primary">恢復標準版</button></div></dialog>
-<script defer src="./app.js?v=20261118-views-tools"></script>
+<script defer src="./app.js?v=20261118-no-note"></script>
 <script defer src="./option-motion.js?v=20261116-scope"></script></body>
 </html>
 
