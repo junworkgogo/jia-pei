@@ -94,3 +94,7 @@ html:has(dialog[open]){overflow:hidden}
 .glass-field .choice-visual{aspect-ratio:1.2}
 .glass-field .choice:first-child .choice-img{transform:scaleY(1.36);transform-origin:center 8%}
 @media(min-width:701px){main{padding-bottom:24px}}
+/* 2026-11-18 生圖工具、出圖方式、視角 */
+.choice-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.choice-grid.three .choice small{font-size:10px}.tool-grid{grid-template-columns:1fr 1fr}.text-choice{padding:12px 11px}.text-choice small{line-height:1.6}.multi-note{color:#000099}.multi-note span{color:var(--accent);margin-right:4px}#tool-note:empty{display:none}
+@media(max-width:1000px){.tool-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.choice-grid.three{gap:6px}.choice-grid.three .choice{padding:8px}.choice-grid.three .choice strong{font-size:11px}.choice-grid.three .choice small{display:none}}

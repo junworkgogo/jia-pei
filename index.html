@@ -6,7 +6,7 @@
 <title>JAI配咒語</title>
 <meta name="description" content="選擇門片、衣櫃與玻璃門的呈現方式，即時組合專屬家配提示詞，複製後搭配 2D 平面圖交給 AI 生圖工具使用。">
 <link rel="icon" type="image/svg+xml" sizes="any" href="./favicon-smile-20261112.svg?v=2">
-<link rel="stylesheet" href="./style.css?v=20261116-glass-footer">
+<link rel="stylesheet" href="./style.css?v=20261118-views-tools">
 <link rel="stylesheet" href="./option-motion.css?v=20261116-1"></head>
 <body>
   <header class="site-header">
@@ -19,7 +19,22 @@
         <div class="panel-heading"><h1 id="settings-title">客製你的咒語</h1></div>
         <form id="settings-form">
           <div id="panel-basic">
-            <details class="rules-details"><summary><svg class="rules-lock" viewBox="0 0 20 20" aria-hidden="true"><rect x="5" y="9" width="10" height="8" rx="2"/><path d="M7 9V6a3 3 0 0 1 6 0v3"/></svg>固定保留規則<span aria-hidden="true">查看項目</span></summary><div class="fixed-rules"><p class="fixed-rules-caption">已鎖定・自動納入每次咒語</p><ul><li><strong>建築格局</strong><span>外牆、隔間與門窗開口不變</span></li><li><strong>家具配置</strong><span>位置、尺寸、數量與朝向不變</span></li><li><strong>其他收納櫃</strong><span>保留頂板、關閉門片</span></li><li><strong>窗戶</strong><span>形式、位置、尺寸與開啟狀態不變</span></li><li><strong>室外冷氣機</strong><span>依原圖 AC 標示位置保留</span></li><li><strong>製圖符號</strong><span>移除文字、尺寸線、X 記號與開門圓弧</span></li></ul><p class="fixed-rules-note">生成後仍需核對格局與物件。</p></div></details>
+            <details class="rules-details"><summary><svg class="rules-lock" viewBox="0 0 20 20" aria-hidden="true"><rect x="5" y="9" width="10" height="8" rx="2"/><path d="M7 9V6a3 3 0 0 1 6 0v3"/></svg>固定保留規則<span aria-hidden="true">查看項目</span></summary><div class="fixed-rules"><p class="fixed-rules-caption">已鎖定・自動納入每次咒語</p><ul><li><strong>建築格局</strong><span>外牆、隔間與門窗開口不變</span></li><li><strong>家具配置</strong><span>位置、尺寸、數量與朝向不變</span></li><li><strong>其他收納櫃</strong><span>保留頂板、關閉門片</span></li><li><strong>窗戶</strong><span>形式、位置、尺寸與開啟狀態不變</span></li><li><strong>室外冷氣機</strong><span>依原圖 AC 標示位置保留</span></li><li><strong>製圖符號</strong><span>移除文字、尺寸線、X 記號與開門圓弧</span></li><li><strong>房間名稱</strong><span>用來判斷空間用途，成品中不出現文字</span></li><li><strong>材質配色</strong><span>依原圖的著色與圖例轉換，不另改風格</span></li><li><strong>光線</strong><span>白天自然光，陰影柔和</span></li></ul><p class="fixed-rules-note">生成後仍需核對格局與物件。</p></div></details>
+            <fieldset><legend>生圖工具 <span>咒語會依工具調整寫法</span></legend><div class="choice-grid tool-grid">
+              <label class="choice text-choice"><input type="radio" name="tool" value="gpt" checked><span><strong>GPT</strong><small>可對話，不確定處先問你</small></span></label>
+              <label class="choice text-choice"><input type="radio" name="tool" value="magnific"><span><strong>Magnific</strong><small>一次出圖，不提問</small></span></label>
+              <label class="choice text-choice"><input type="radio" name="tool" value="higgsfield"><span><strong>Higgsfield</strong><small>一次出圖，不提問</small></span></label>
+              <label class="choice text-choice"><input type="radio" name="tool" value="other"><span><strong>其他</strong><small>一次出圖，不提問</small></span></label>
+            </div><p class="field-note" id="tool-note"></p></fieldset>
+            <fieldset><legend>出圖方式</legend><div class="choice-grid">
+              <label class="choice text-choice"><input type="radio" name="mode" value="single" checked><span><strong>單層一張</strong><small>一張原圖只有一個樓層</small></span></label>
+              <label class="choice text-choice"><input type="radio" name="mode" value="multi"><span><strong>多層分開</strong><small>一張原圖含多層，各層分開轉 3D、並排輸出</small></span></label>
+            </div><p class="field-note multi-note" id="multi-note" hidden><span aria-hidden="true">✓</span> 已加入樓層對齊規則：樓梯、電梯、管道間與結構柱上下對齊</p></fieldset>
+            <fieldset><legend>視角</legend><div class="choice-grid three">
+              <label class="choice"><span class="choice-visual"><img class="choice-img" src="./img/view-top.svg" alt="從正上方垂直俯視的家配示意" width="600" height="500"><span class="image-label">90°</span></span><input type="radio" name="angle" value="top"><span><strong>正俯視</strong><small>像平面圖，看得最完整</small></span></label>
+              <label class="choice"><span class="choice-visual"><img class="choice-img" src="./img/view-45.svg" alt="約 45 度斜俯視的家配示意" width="600" height="500"><span class="image-label">45°</span></span><input type="radio" name="angle" value="iso" checked><span><strong>斜俯視</strong><small>有立體感，格局仍清楚</small></span></label>
+              <label class="choice"><span class="choice-visual"><img class="choice-img" src="./img/view-30.svg" alt="約 30 度低角度鳥瞰的家配示意" width="600" height="500"><span class="image-label">30°</span></span><input type="radio" name="angle" value="low"><span><strong>低角度</strong><small>牆面與家具立面更明顯</small></span></label>
+            </div></fieldset>
             <fieldset><legend>房門</legend><div class="choice-grid">
               <label class="choice door-choice"><span class="choice-visual"><img class="choice-img" src="./img/door-remove.jpg" alt="門洞保留、門片移除的局部示意" width="384" height="314"><span class="image-label">門洞保留</span></span><input type="radio" name="doors" value="remove" checked><span><strong>移除門片</strong><small>保留原有門洞與通道</small></span></label>
               <label class="choice door-choice"><span class="choice-visual"><img class="choice-img" src="./img/door-keep.jpg" alt="門片關閉的局部示意" width="600" height="491"><span class="image-label">門片關閉</span></span><input type="radio" name="doors" value="keep"><span><strong>保留門片</strong><small>維持原有門型，完全關閉</small></span></label>
@@ -41,12 +56,12 @@
       </section>
       <section class="preview" id="preview" aria-labelledby="preview-title" tabindex="-1">
         <div class="preview-header"><div><div class="eyebrow">YOUR PROMPT</div><h2 id="preview-title">專屬家配咒語</h2></div><span class="live"><span class="accent-dot"></span> 即時更新</span></div>
-        <div class="preview-tags" aria-label="目前設定摘要"><span id="tag-door">移除門片</span><span id="tag-wardrobe">衣櫃敞頂</span><span id="tag-glass">玻璃門關閉</span></div>
-        <dl class="selection-summary"><div><dt>房門</dt><dd id="summary-door"></dd></div><div><dt>衣櫃表現</dt><dd id="summary-wardrobe"></dd></div><div id="summary-clothing-row"><dt>衣物細節</dt><dd id="summary-clothing"></dd></div><div><dt>乾濕分離玻璃門</dt><dd id="summary-glass"></dd></div></dl>
+        <div class="preview-tags" aria-label="目前設定摘要"><span id="tag-tool">GPT</span><span id="tag-mode">單層一張</span><span id="tag-angle">斜俯視 45°</span><span id="tag-door">移除門片</span><span id="tag-wardrobe">衣櫃敞頂</span><span id="tag-glass">玻璃門關閉</span></div>
+        <dl class="selection-summary"><div><dt>生圖工具</dt><dd id="summary-tool"></dd></div><div><dt>出圖方式</dt><dd id="summary-mode"></dd></div><div><dt>視角</dt><dd id="summary-angle"></dd></div><div><dt>房門</dt><dd id="summary-door"></dd></div><div><dt>衣櫃表現</dt><dd id="summary-wardrobe"></dd></div><div id="summary-clothing-row"><dt>衣物細節</dt><dd id="summary-clothing"></dd></div><div><dt>乾濕分離玻璃門</dt><dd id="summary-glass"></dd></div></dl>
         <div class="included-rule"><span aria-hidden="true">✓</span> 已包含格局、門窗與物件配置保留規則</div>
         <div class="prompt-details"><button type="button" id="view-prompt" class="prompt-trigger" aria-haspopup="dialog" aria-controls="prompt-dialog">查看完整咒語<span aria-hidden="true">開啟視窗 ↗</span></button></div>
-        <div class="preview-bottom"><div class="prompt-meta"><span>標準規則 v1.0 · 全文複製</span><span id="char-count"></span></div><div class="output-actions"><button class="primary" id="copy"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="6" width="9" height="11" rx="2"/><path d="M12 6V3H4v11h3"/></svg><span>複製完整咒語</span></button></div></div>
-        <p class="usage-note">每次搭配一張單層平面圖；透天請逐層生成。</p><button class="text-button demo-link" id="show-demo">查看多樓層使用示範 ↗</button>
+        <div class="preview-bottom"><div class="prompt-meta"><span>標準規則 v1.1 · 全文複製</span><span id="char-count"></span></div><div class="output-actions"><button class="primary" id="copy"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="6" width="9" height="11" rx="2"/><path d="M12 6V3H4v11h3"/></svg><span>複製完整咒語</span></button></div></div>
+        <p class="usage-note" id="usage-note">每次搭配一張單層平面圖；透天可改選「多層分開」。</p><button class="text-button demo-link" id="show-demo">查看多樓層使用示範 ↗</button>
       </section>
     </div>
   </main>
@@ -61,12 +76,12 @@
     <button class="close-dialog" aria-label="關閉使用說明">×</button>
     <div class="eyebrow">QUICK GUIDE</div><h2 id="help-title">選設定、複製、搭配原圖。</h2>
     <ol class="guide compact-guide">
-      <li><strong>準備單層圖</strong><p>透天先分開擷取各樓層，每次只用一層。</p></li>
-      <li><strong>調整並複製</strong><p>選好門片、衣櫃與玻璃門，複製完整咒語。</p></li>
+      <li><strong>準備原圖</strong><p>單層圖直接使用；透天可選「多層分開」整張上傳，或逐層擷取後用「單層一張」。</p></li>
+      <li><strong>調整並複製</strong><p>選好生圖工具、出圖方式、視角、門片、衣櫃與玻璃門，複製完整咒語。</p></li>
       <li><strong>搭配原圖生成</strong><p>將該層原圖與咒語交給生圖工具，完成後核對格局。</p></li>
     </ol>
     <section class="floor-demo" aria-labelledby="demo-title"><h3 id="demo-title">DEMO · 以三層透天為例</h3>
-      <p class="demo-caption">一次一層，分開生成。以下為操作示意。</p>
+      <p class="demo-caption">「單層一張」的做法：一次一層，分開生成。也可以改選「多層分開」整張上傳。</p>
       <div class="floor-demo-grid">
         <figure class="demo-source"><figcaption><span class="demo-number">01</span> 多樓層原圖</figcaption><div class="floor-sheet" aria-label="一張原圖內排列一樓、二樓、三樓"><div class="mini-plan"><span>1F</span></div><div class="mini-plan"><span>2F</span></div><div class="mini-plan"><span>3F</span></div></div><p>先分開擷取，不整張上傳</p></figure>
         <figure><figcaption><span class="demo-number">02</span> 分開成單層</figcaption><div class="split-plans"><div class="mini-plan"><span>1F</span></div><div class="mini-plan"><span>2F</span></div><div class="mini-plan"><span>3F</span></div></div><p>每張保留該層完整格局</p></figure>
@@ -76,7 +91,7 @@
     <button class="primary close-help">開始設定</button>
   </dialog>
   <dialog id="reset-dialog" aria-labelledby="reset-title"><h2 id="reset-title">恢復標準版？</h2><p>目前選項將回到初始值。已儲存的設定仍會保留，重新開啟網站時會載入。</p><div class="dialog-actions"><button id="cancel-reset" class="secondary">保留目前設定</button><button id="confirm-reset" class="primary">恢復標準版</button></div></dialog>
-<script defer src="./app.js?v=20261116-simplify-copy"></script>
+<script defer src="./app.js?v=20261118-views-tools"></script>
 <script defer src="./option-motion.js?v=20261116-scope"></script></body>
 </html>
 

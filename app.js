@@ -1,7 +1,7 @@
 'use strict';
 // The builder is pure so every combination can be checked without a browser.
-const DEFAULTS = Object.freeze({doors:'remove',wardrobe:'open',density:'full',clothes:'natural',glass:'closed',style:'original',wall:'original',wood:'original',floor:'original',angle:'original',background:'original',light:'original',project:'',confirmed:'',extra:''});
-const OPTIONS = {doors:['remove','keep'],wardrobe:['open','closed'],density:['full','moderate'],clothes:['natural','neutral','monochrome'],glass:['closed','original'],style:['original','modern','warm','hotel','japandi'],wall:['original','dark','light'],wood:['original','light','medium','dark'],floor:['original','wood','stone'],angle:['original','top','iso'],background:['original','white','gray','cream'],light:['original','soft','studio']};
+const DEFAULTS = Object.freeze({tool:'gpt',mode:'single',doors:'remove',wardrobe:'open',density:'full',clothes:'natural',glass:'closed',style:'original',wall:'original',wood:'original',floor:'original',angle:'iso',background:'original',light:'original',project:'',confirmed:'',extra:''});
+const OPTIONS = {tool:['gpt','magnific','higgsfield','other'],mode:['single','multi'],doors:['remove','keep'],wardrobe:['open','closed'],density:['full','moderate'],clothes:['natural','neutral','monochrome'],glass:['closed','original'],style:['original','modern','warm','hotel','japandi'],wall:['original','dark','light'],wood:['original','light','medium','dark'],floor:['original','wood','stone'],angle:['original','top','iso','low'],background:['original','white','gray','cream'],light:['original','soft','studio']};
 function normalizeSettings(raw) {
   const result={...DEFAULTS};
   if (!raw || typeof raw!=='object' || Array.isArray(raw)) return result;
@@ -11,11 +11,17 @@ function normalizeSettings(raw) {
 }
 function buildPrompt(raw) {
   const s=normalizeSettings(raw);
+  const ask=s.tool==='gpt';
+  const multi=s.mode==='multi';
   const parts=[
-    '請將這張 2D 家配圖轉成立體家配圖。先辨識建築、家具與設備的實際形體，再將製圖符號轉換成實體物件，不要把平面圖上的所有線條直接畫成立體表面的圖案。',
-    '【輸入範圍】\n本次只處理所附原圖中的單一樓層。若圖中同時出現多個樓層、不同戶型或多張平面圖，先停止並請我提供要處理的單層圖，不要自行合併、挑選或混用格局。',
+    '請將這張 2D 家配圖轉成立體家配圖。先辨識建築、家具與設備的實際形體，再將製圖符號轉換成實體物件，不要把平面圖上的所有線條直接畫成立體表面的圖案。'+(ask?'':'直接輸出完成的圖片，不需要回覆文字或提問。'),
+    multi?
+      '【輸入範圍：多層分開】\n原圖包含多個樓層的平面圖。先依圖上的樓層標示（例如 1F、2F、3F）辨識每一層，再把每一層各自轉成一個獨立的立體家配，依原圖的排列順序與方向並排在同一張圖中，樓層之間保留清楚的留白。\n\n每一層只使用該層自己的格局與物件，不得合併、上下疊在一起、互相借用或補齊其他樓層的內容。各層使用相同的視角、比例與光線。'+(ask?'若無法分辨樓層的範圍或順序，先指出位置並請我確認。':'無法分辨的樓層範圍，依原圖的分隔與排列方式判斷，不自行合併。')
+      :'【輸入範圍】\n本次只處理所附原圖中的單一樓層。'+(ask?'若圖中同時出現多個樓層、不同戶型或多張平面圖，先停止並請我提供要處理的單層圖，不要自行合併、挑選或混用格局。':'不要合併、挑選或混用其他樓層、戶型或平面圖的格局。'),
+    '【房間名稱】\n原圖上的空間名稱（例如客廳、餐廳、主臥、次臥、廚房、浴室、陽台）用來判斷每個空間的用途與應有的設備，例如浴室的馬桶、洗手台與淋浴區，廚房的流理台與爐具。只轉換原圖已畫出的物件，不因空間名稱額外增加家具或設備。判讀完成後，名稱文字不出現在成品中。',
     '【格局與配置】\n保留原圖的外牆輪廓、隔間、門窗開口，以及家具的位置、尺寸、數量與朝向。不得為了美化構圖而移動、旋轉、增減物件，或改變門洞與通道寬度。'
   ];
+  if(multi) parts.push('【樓層對齊】\n各樓層的外牆輪廓、樓梯、電梯、管道間與結構柱，依原圖位置上下對應；樓梯在每一層的位置、方向與梯段數保持一致，不可移位或改變走向。各層使用同一比例尺，原圖外框尺寸相同的樓層，成品中也保持相同大小。');
   if(s.project.trim()) parts.splice(1,0,'【專案名稱】\n'+s.project.trim());
   let wardrobe='【衣櫃與掛衣區】\n已確認為衣櫃、且原圖內有衣架或掛衣符號的區域，依原圖範圍建立實體木質櫃身、側板、背板、掛衣桿與衣架。';
   if(s.wardrobe==='open'){
@@ -37,24 +43,26 @@ function buildPrompt(raw) {
   glass+=s.glass==='closed'?'並將玻璃門一律呈現為完全關閉，不保留原圖的開門角度。\n\n關閉的門片對齊原有門洞與淋浴區邊界，':'玻璃門維持原圖開啟狀態與角度。\n\n門片依原圖位置與淋浴區邊界建立，';
   glass+='以薄片透明玻璃表現，保留細緻玻璃邊緣、輕微反射及必要的簡潔五金。不要做成厚重玻璃牆、粗框門或不透明門板，也不要過度染藍、染綠。\n\n保留原有門型與分片方式：推拉門維持推拉結構，鉸鏈門維持鉸鏈結構；';
   glass+=s.glass==='closed'?'只改為關閉狀態，':'維持原圖狀態，';
-  glass+='不改變位置、開口寬度與淋浴區範圍，不額外增加玻璃分片。原有固定玻璃隔屏保持原位。\n\n不需僅因鉸鏈側或開啟方向不清楚而詢問，也不要自行添加無法確認的鉸鏈或把手細節。若連玻璃門的位置、範圍或門型都無法確認，才先指出位置請我確認。';
+  glass+='不改變位置、開口寬度與淋浴區範圍，不額外增加玻璃分片。原有固定玻璃隔屏保持原位。\n\n'+(ask?'不需僅因鉸鏈側或開啟方向不清楚而詢問，也不要自行添加無法確認的鉸鏈或把手細節。若連玻璃門的位置、範圍或門型都無法確認，才先指出位置請我確認。':'不要自行添加無法確認的鉸鏈或把手細節。門型不清楚時，依原圖線條最接近的形式呈現。');
   parts.push(glass);
   parts.push('【窗戶】\n保留所有窗戶的形式、位置、尺寸及原有開啟狀態，不得移除、封閉或改成其他形式。');
   parts.push('【室外冷氣機】\n圖面上標示「AC」的位置，一律是室外冷氣機，不是室內冷氣。依原圖位置建立實體室外冷氣機；「AC」字樣只是標示，不出現在成品中。');
   parts.push('【顯示方式】\n移除屋頂以看見室內。'+(s.wardrobe==='open'?'衣櫃與掛衣區採敞頂表現，讓整排衣物完整可見；鞋櫃與其他收納櫃保留完整、不透明的木質頂板。':'衣櫃、鞋櫃與其他收納櫃均保留完整、不透明的木質頂板及關閉門片。')+'\n\n製圖輔助線、尺寸線、文字、X 記號、非實體對角線及開門圓弧均不出現在成品中；實際物件的接縫、材質分界與邊界仍須保留。');
+  parts.push('【材質、配色與光線】\n地坪、牆面、家具與櫃體的顏色和材質，依原圖的著色與圖例轉換：原圖有上色時（例如木地板紋路、磁磚格線、石材色塊、家具顏色），照原圖的色系與材質呈現，並保留原圖的地坪分區；原圖為黑白線稿時，採中性、自然的材質。不額外改變風格，也不加入原圖沒有的擺飾、地毯或植栽。\n\n光線一律為白天的自然光，陰影柔和、方向一致。不出現夜景、室內燈光效果或戲劇化的光影。');
+  const angles={top:'【視角】\n採垂直正上方俯視（90°），保持原圖上下左右方向，完整呈現全戶。',iso:'【視角】\n採約 45° 的斜俯視立體角度，鏡頭位於原圖下方、朝上方看，保持原圖上下左右方向與物件的相對位置，完整呈現全戶，不裁切任何物件。為了看清室內，靠近鏡頭一側的外牆以剖切方式降低高度，但不刪除或移動牆體。',low:'【視角】\n採約 30° 的低角度鳥瞰，鏡頭位於原圖下方、朝上方看，讓牆面高度與家具立面更明顯，保持原圖上下左右方向與物件的相對位置，完整呈現全戶，不裁切任何物件。靠近鏡頭一側的外牆以剖切方式降低高度，但不刪除或移動牆體。'};
+  if(angles[s.angle]) parts.push(angles[s.angle]+(multi?'所有樓層使用同一視角。':''));
   const visual=[];
   const style={modern:'室內採現代簡約風格，以簡潔材質與克制配色呈現。',warm:'室內採暖木自然風格，以溫潤木質與柔和中性色呈現。',hotel:'室內採高端飯店風格，以細緻質感與沉穩配色呈現。',japandi:'室內採日式侘寂風格，以低彩度、自然肌理與簡潔材質呈現。'};
   const wall={dark:'牆體（外牆與隔間牆）統一採深色。',light:'牆體（外牆與隔間牆）統一採淺色。'};
   const wood={light:'木質櫃體統一採淺色橡木。',medium:'木質櫃體統一採溫潤中木色。',dark:'木質櫃體統一採深色胡桃木。'};
   const floor={wood:'公共區與臥室採淺木地板；廚房與浴室保留原有適用材質及分區。',stone:'公共區採淺色石材、臥室採木地板；廚房與浴室保留原有適用材質及分區。'};
-  const angle={top:'採垂直正上方俯視，保持原圖上下左右方向，完整呈現全戶。',iso:'採斜上方立體俯視，保持全戶格局方向與物件相對位置，完整呈現全戶，不裁切物件。'};
-  const background={white:'畫面背景採純白色。',gray:'畫面背景採淺灰色。',cream:'畫面背景採暖米白色。'};
+    const background={white:'畫面背景採純白色。',gray:'畫面背景採淺灰色。',cream:'畫面背景採暖米白色。'};
   const light={soft:'以柔和自然光與細緻陰影表現物件體積。',studio:'以均勻棚拍光與清晰物件邊界表現，不加入實際燈具。'};
-  for(const [key,map] of Object.entries({style,wall,wood,floor,angle,background,light})) if(map[s[key]]) visual.push(map[s[key]]);
-  if(visual.length) parts.push('【材質與畫面】\n'+visual.join('\n')+'\n以上只調整材質、配色、光線與觀看角度，不增減家具、擺飾或植栽，不改變建築與物件的位置、尺寸、數量或朝向。保留原有接縫、材質分界與區域邊界。');
+  for(const [key,map] of Object.entries({style,wall,wood,floor,background,light})) if(map[s[key]]) visual.push(map[s[key]]);
+  if(visual.length) parts.push('【材質與畫面】\n'+visual.join('\n')+'\n以上只調整材質、配色與光線，不增減家具、擺飾或植栽，不改變建築與物件的位置、尺寸、數量或朝向。保留原有接縫、材質分界與區域邊界。');
   if(s.confirmed.trim())parts.push('【使用者已確認的區域資訊】\n'+s.confirmed.trim()+'\n以上已確認項目直接沿用，不必重複詢問；其他未確認區域不得據此類推。若文字與原圖或設定衝突，先指出具體位置並詢問，不自行變更格局或物件。');
   if(s.extra.trim())parts.push('【使用者補充偏好】\n'+s.extra.trim()+'\n補充偏好不覆蓋格局與物件配置規則；若與其他設定衝突，先提出具體衝突請我確認，不擅自套用。');
-  parts.push('【不確定的地方】\n不要把所有 X 記號一律認定為衣櫃，也不要把不明線條一律轉成衣架或衣物。\n\n無法確認某區域是衣櫃、其他收納櫃、平台、管道間、設備或其他物件時，先指出具體位置並向我確認，再生成。已經確認過的項目直接沿用，不必重複詢問。');
+  parts.push(ask?'【不確定的地方】\n不要把所有 X 記號一律認定為衣櫃，也不要把不明線條一律轉成衣架或衣物。\n\n無法確認某區域是衣櫃、其他收納櫃、平台、管道間、設備或其他物件時，先指出具體位置並向我確認，再生成。已經確認過的項目直接沿用，不必重複詢問。':'【不確定的地方】\n不要把所有 X 記號一律認定為衣櫃，也不要把不明線條一律轉成衣架或衣物。\n\n無法確認用途的區域，依原圖的線條與範圍保守呈現為簡潔的實體量體，或維持空地；不要自行猜測加入衣物、設備或家具。');
   return parts.join('\n\n');
 }
 if(typeof document!=='undefined'){
@@ -81,6 +89,16 @@ if(typeof document!=='undefined'){
     $('summary-clothing-row').hidden=!open;
     $('summary-clothing').textContent=(state.density==='full'?'飽滿連續':'適中留白')+' · '+({natural:'自然配色',neutral:'米白與大地色',monochrome:'黑白灰'}[state.clothes]);
     $('summary-glass').textContent=state.glass==='closed'?'完全關閉':'保留原圖狀態';
+    const toolName={gpt:'GPT',magnific:'Magnific',higgsfield:'Higgsfield',other:'其他'}[state.tool];
+    const angleName={original:'不指定',top:'正俯視 90°',iso:'斜俯視 45°',low:'低角度 30°'}[state.angle];
+    $('tag-tool').textContent=toolName;$('tag-mode').textContent=state.mode==='multi'?'多層分開':'單層一張';$('tag-angle').textContent=angleName;
+    $('summary-tool').textContent=toolName+(state.tool==='gpt'?'，不確定處會先問你':'，一次出圖、不提問');
+    $('summary-mode').textContent=state.mode==='multi'?'多層分開，並排輸出':'單層一張';
+    $('summary-angle').textContent=angleName;
+    $('multi-note').hidden=state.mode!=='multi';
+    $('tool-note').textContent={gpt:'直接把原圖和咒語貼進 ChatGPT。不確定的區域，GPT 會先問你再生成。',magnific:'建議在 Magnific 的圖片生成選 Nano Banana Pro，上傳原圖當參考圖，再貼上咒語。',higgsfield:'建議在 Higgsfield 選 Image → Nano Banana Pro，使用 Image-to-Image，上傳原圖再貼上咒語。',other:'適用一次出圖的工具：上傳原圖當參考圖，再貼上咒語。咒語不會要求工具提問。'}[state.tool];
+    $('usage-note').textContent=state.mode==='multi'?'多層原圖可整張上傳，各層會分開轉 3D 並排輸出。':'每次搭配一張單層平面圖；透天可改選「多層分開」。';
+    $('show-demo').hidden=state.mode==='multi';
   }
   form.addEventListener('input',render);form.addEventListener('change',render);form.addEventListener('submit',e=>e.preventDefault());
   function selectTab(tab,focus=false){document.querySelectorAll('[role="tab"]').forEach(t=>{const active=t===tab;t.setAttribute('aria-selected',String(active));t.tabIndex=active?0:-1;$(t.getAttribute('aria-controls')).hidden=!active;});if(focus)tab.focus();}
