@@ -6,7 +6,7 @@
 <title>JAI配咒語</title>
 <meta name="description" content="選擇門片、衣櫃與玻璃門的呈現方式，即時組合專屬家配提示詞，複製後搭配 2D 平面圖交給 AI 生圖工具使用。">
 <link rel="icon" type="image/svg+xml" sizes="any" href="./favicon-smile-20261112.svg?v=2">
-<link rel="stylesheet" href="./style.css?v=20261118-compare">
+<link rel="stylesheet" href="./style.css?v=20261118-compare2">
 <link rel="stylesheet" href="./option-motion.css?v=20261116-1"></head>
 <body>
   <header class="site-header">
@@ -60,8 +60,8 @@
         <dl class="selection-summary"><div><dt>生圖工具</dt><dd id="summary-tool"></dd></div><div><dt>出圖方式</dt><dd id="summary-mode"></dd></div><div><dt>視角</dt><dd id="summary-angle"></dd></div><div><dt>房門</dt><dd id="summary-door"></dd></div><div><dt>衣櫃表現</dt><dd id="summary-wardrobe"></dd></div><div id="summary-clothing-row"><dt>衣物細節</dt><dd id="summary-clothing"></dd></div><div><dt>乾濕分離玻璃門</dt><dd id="summary-glass"></dd></div></dl>
         <div class="included-rule"><span aria-hidden="true">✓</span> 已包含格局、門窗與物件配置保留規則</div>
         <div class="prompt-details"><button type="button" id="view-prompt" class="prompt-trigger" aria-haspopup="dialog" aria-controls="prompt-dialog">查看完整咒語<span aria-hidden="true">開啟視窗 ↗</span></button></div>
-        <div class="preview-bottom"><div class="prompt-meta"><span>標準規則 v1.1 · 全文複製</span><span id="char-count"></span></div><div class="output-actions"><button class="primary" id="copy"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="6" width="9" height="11" rx="2"/><path d="M12 6V3H4v11h3"/></svg><span>複製完整咒語</span></button></div></div>
-        <p class="usage-note" id="usage-note">每次搭配一張單層平面圖；透天可改選「多層分開」。</p><button class="text-button demo-link" id="show-demo">查看多樓層使用示範 ↗</button><button class="text-button demo-link" id="open-compare">生成後：疊圖比對 ↗</button>
+        <div class="preview-bottom"><div class="prompt-meta"><span>標準規則 v1.1 · 全文複製</span><span id="char-count"></span></div><div class="output-actions"><button type="button" class="secondary compare-btn" id="open-compare">疊圖比對</button><button class="primary" id="copy"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="6" width="9" height="11" rx="2"/><path d="M12 6V3H4v11h3"/></svg><span>複製完整咒語</span></button></div></div>
+        <p class="usage-note" id="usage-note">每次搭配一張單層平面圖；透天可改選「多層分開」。</p><button class="text-button demo-link" id="show-demo">查看多樓層使用示範 ↗</button>
       </section>
     </div>
   </main>
@@ -107,7 +107,7 @@
     </div>
     <p class="compare-note">拖曳生成圖可對齊；圖片不會上傳。</p>
   </dialog>
-<script defer src="./app.js?v=20261118-compare"></script>
+<script defer src="./app.js?v=20261118-compare2"></script>
 <script defer src="./option-motion.js?v=20261116-scope"></script></body>
 </html>
 
