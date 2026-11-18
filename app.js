@@ -130,6 +130,20 @@ if(typeof document!=='undefined'){
   $('show-demo').addEventListener('click',()=>{$('help-dialog').showModal();$('demo-title').scrollIntoView({block:'nearest'});});
   document.querySelectorAll('#help-dialog .close-dialog,#help-dialog .close-help').forEach(b=>b.addEventListener('click',()=>$('help-dialog').close()));
   document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{const r=d.getBoundingClientRect();if(e.target===d&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))d.close();}));
+  // 疊圖比對：圖片只在瀏覽器內處理，不上傳
+  const cmp={x:0,y:0,urls:{}};
+  function cmpApply(){const side=document.querySelector('input[name="cmp-mode"]:checked').value==='side';$('compare-stage').dataset.mode=side?'side':'overlay';$('cmp-opacity').disabled=side;$('cmp-scale').disabled=side;$('cmp-top').style.opacity=side?1:$('cmp-opacity').value/100;$('cmp-top').style.transform=side?'':`translate(${cmp.x}px,${cmp.y}px) scale(${$('cmp-scale').value/100})`;}
+  function cmpLoad(which){const file=$('cmp-file-'+which).files[0];if(!file)return;if(cmp.urls[which])URL.revokeObjectURL(cmp.urls[which]);cmp.urls[which]=URL.createObjectURL(file);const img=$('cmp-'+which);img.src=cmp.urls[which];img.hidden=false;$('cmp-name-'+which).textContent=file.name;$('compare-empty').hidden=true;cmpApply();}
+  ['base','top'].forEach(w=>$('cmp-file-'+w).addEventListener('change',()=>cmpLoad(w)));
+  document.querySelectorAll('input[name="cmp-mode"]').forEach(r=>r.addEventListener('change',cmpApply));
+  $('cmp-opacity').addEventListener('input',cmpApply);$('cmp-scale').addEventListener('input',cmpApply);
+  $('cmp-reset').addEventListener('click',()=>{cmp.x=0;cmp.y=0;$('cmp-scale').value=100;cmpApply();});
+  let drag=null;
+  $('cmp-top').addEventListener('pointerdown',e=>{if($('compare-stage').dataset.mode!=='overlay')return;drag={sx:e.clientX-cmp.x,sy:e.clientY-cmp.y};$('cmp-top').setPointerCapture(e.pointerId);e.preventDefault();});
+  $('cmp-top').addEventListener('pointermove',e=>{if(!drag)return;cmp.x=e.clientX-drag.sx;cmp.y=e.clientY-drag.sy;cmpApply();});
+  ['pointerup','pointercancel'].forEach(n=>$('cmp-top').addEventListener(n,()=>{drag=null;}));
+  $('open-compare').addEventListener('click',()=>{cmpApply();$('compare-dialog').showModal();});
+  $('close-compare').addEventListener('click',()=>$('compare-dialog').close());
   try{const stored=JSON.parse(localStorage.getItem(storageKey)||'null');if(stored?.version===1&&stored.settings&&typeof stored.settings==='object'&&!Array.isArray(stored.settings)){state=normalizeSettings(stored.settings);$('save-note').textContent='已載入此瀏覽器先前儲存的設定。';}}catch{$('save-note').textContent='未載入儲存設定，目前使用標準版。';}
   applyToForm(state);render();
 }
